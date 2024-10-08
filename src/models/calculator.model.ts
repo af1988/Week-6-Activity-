@@ -34,10 +34,12 @@ export class CalculatorModel implements ICalculatorModel, IContext {
 
   public pressNumericKey(key: NumericKeys): void {
     this._state.digit(key);
+    this.notify(key);
   }
 
   public pressOperatorKey(key: OperatorKeys): void {
     this._state.binaryOperator(key);
+    this.notify(key);
   }
 
   public pressActionKey(key: ActionKeys): void {
@@ -54,6 +56,7 @@ export class CalculatorModel implements ICalculatorModel, IContext {
       default:
         throw new Error('Invalid Action');
     }
+    this.notify(key);
   }
 
   public display(): string {
@@ -62,7 +65,7 @@ export class CalculatorModel implements ICalculatorModel, IContext {
 
   public notify(message: string): void {
     for (let obs of this.observers){
-       obs.update();
+       obs.update(message);
     }
   }
 
