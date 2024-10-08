@@ -60,4 +60,10 @@ export class CalculatorModel implements ICalculatorModel, IContext {
     return this._state.display();
   }
 
+  public notify(message: string): void {
+    for (let obs of this.observers){
+       obs.update();
+    }
+  }
+
 }
